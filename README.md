@@ -50,6 +50,7 @@ Easily ask business questions in natural language—get instant, data-driven ans
 - Show total inventory by color.
 
 ## Screenshots
+<img width="1885" height="912" alt="image" src="https://github.com/user-attachments/assets/db847403-c775-416e-b55a-d560bcb96376" />
 
 <img width="1895" height="963" alt="Screenshot 2025-10-21 220027" src="https://github.com/user-attachments/assets/0b33e897-fd98-4757-bb5a-9b878c8387a5" />
 
