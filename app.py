@@ -7,6 +7,14 @@ from langchain_community.utilities import SQLDatabase
 from langchain.prompts import FewShotPromptTemplate, PromptTemplate
 from fewshot_examples import fewshot_examples
 from db_config import get_db
+import langchain
+
+os.environ["LANGCHAIN_VERBOSE"] = "true"
+langchain.debug = True
+
+
+# --- PAGE CONFIG ---
+st.set_page_config(page_title="Retail Data Chatbot", layout="centered")
 
 # --- UI Theme Customization ---
 st.markdown("""
@@ -15,6 +23,16 @@ st.markdown("""
 .stApp [data-testid="stSidebar"], .stApp [data-testid="stHeader"] { background-color: #1a2b56; }
 .stApp [data-testid="stTextInput"] > div > div > input { background-color: #1a2b56; color: #f0f2f6; }
 .stApp [data-testid="chat-input"] { background-color: #1a2b56; }
+[data-testid="stChatMessage"] {
+    background-color: #1a2b56;
+    border-radius: 12px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+}
+[data-testid="stChatMessage"][data-testid="user"] {
+    background-color: #233469;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -92,7 +110,7 @@ if user_input := st.chat_input("Type your question here..."):
         top_k = 5
         # 🔹 Step 1: Ask LLM to produce SQL query
         full_prompt = few_shot_prompt.format(input=user_input, schema=table_schema, top_k=top_k)
-        generated = llm.invoke(full_prompt)
+        generated = llm.invoke(full_prompt).content
 
         # 🔹 Step 2: Extract the SQL query
         sql_query = extract_sql_query(generated)
@@ -111,7 +129,8 @@ if user_input := st.chat_input("Type your question here..."):
                     f"Now answer the original question: '{user_input}' "
                     f"in a concise and natural way, using the actual result number."
                 )
-                answer = llm.invoke(answer_prompt).strip()
+                answer = llm.invoke(answer_prompt).content.strip()
+
 
             except Exception as e:
                 answer = f"Error executing query: {e}"
