@@ -33,7 +33,7 @@ Easily ask business questions in natural language—get instant, data-driven ans
 
 1. **Clone this repo**
 2. **Install dependencies**  
-   `pip install -r requirements.txt`
+   
 3. **Set up your .env file**  
    ```
    GOOGLE_API_KEY=your_gemini_api_key_here
